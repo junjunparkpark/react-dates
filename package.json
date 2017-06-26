@@ -13,7 +13,7 @@
     "cover": "cross-env NODE_ENV=test node --max-old-space-size=2048 $(which nyc) npm run mocha test",
     "lint": "eslint --ext .js,.jsx src test",
     "mocha": "mocha ./test/_helpers",
-    "storybook:uninstall": "rimraf node_modules/@kadira node_modules/react-modal node_modules/react-dom-factories node_modules/react-svg-loader",
+    "storybook:uninstall": "rimraf node_modules/@storybook node_modules/react-modal node_modules/react-dom-factories node_modules/react-svg-loader",
     "react:clean": "npm run storybook:uninstall && npm uninstall --no-save react react-dom react-addons-test-utils react-test-renderer && rimraf node_modules/react-test-renderer node_modules/react && npm prune",
     "react:14": "rimraf node_modules/.bin/npm && npm run react:clean && npm i --no-save react@0.14 react-dom@0.14 react-addons-test-utils@0.14 && npm run storybook:uninstall && npm prune",
     "react:15": "rimraf node_modules/.bin/npm && npm run react:clean && npm i --no-save react@15 react-dom@15 react-addons-test-utils@15 react-test-renderer@15 && npm run storybook:uninstall && npm prune",
@@ -21,7 +21,7 @@
     "tests-only": "npm run mocha --silent test",
     "tests-karma": "karma start",
     "test": "npm run tests-only && npm run tests-karma",
-    "storybook": "start-storybook -p 9001 -s ./public",
+    "storybook": "start-storybook -p 9001",
     "tag": "git tag v$npm_package_version",
     "gh-pages:clean": "rimraf _gh-pages",
     "gh-pages:build": "$(npm bin)/build-storybook -o _gh-pages",
@@ -36,7 +36,8 @@
     "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish",
     "postpublish": "npm run gh-pages",
     "check-changelog": "expr $(git status --porcelain 2>/dev/null| grep \"^\\s*M.*CHANGELOG.md\" | wc -l) >/dev/null || (echo 'Please edit CHANGELOG.md' && exit 1)",
-    "check-only-changelog-changed": "(expr $(git status --porcelain 2>/dev/null| grep -v \"CHANGELOG.md\" | wc -l) >/dev/null && echo 'Only CHANGELOG.md may have uncommitted changes' && exit 1) || exit 0"
+    "check-only-changelog-changed": "(expr $(git status --porcelain 2>/dev/null| grep -v \"CHANGELOG.md\" | wc -l) >/dev/null && echo 'Only CHANGELOG.md may have uncommitted changes' && exit 1) || exit 0",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -49,14 +50,13 @@
   },
   "homepage": "https://github.com/airbnb/react-dates#readme",
   "devDependencies": {
-    "@kadira/react-storybook-addon-info": "^3.4.0",
-    "@kadira/storybook": "^2.35.3",
-    "@kadira/storybook-addon-options": "^1.0.2",
-    "@kadira/storybook-addons": "^1.6.1",
+    "@storybook/addon-info": "^3.1.6",
+    "@storybook/addon-options": "^3.1.6",
+    "@storybook/react": "^3.1.6",
     "airbnb-js-shims": "^1.1.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
-    "babel-loader": "^6.4.1",
+    "babel-loader": "^7.1.1",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-replace-object-assign": "^0.2.1",
@@ -96,11 +96,11 @@
     "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1",
     "safe-publish-latest": "^1.1.1",
-    "sass-loader": "^4.1.1",
+    "sass-loader": "^6.0.6",
     "sinon": "^2.3.5",
     "sinon-sandbox": "^1.0.2",
     "style-loader": "^0.16.1",
-    "webpack": "^1.15.0"
+    "webpack": "^2.6.1"
   },
   "dependencies": {
     "airbnb-prop-types": "^2.5.4",
